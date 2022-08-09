@@ -9,6 +9,10 @@ spring:
       hibernate:
         format_sql: true
 
+  # ???, ?? ??
+  messages:
+    basename: messages, errors
+
   # Swagger ??
   mvc:
     pathmatch:
