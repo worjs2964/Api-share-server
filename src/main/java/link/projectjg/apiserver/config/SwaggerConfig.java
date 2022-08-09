@@ -30,6 +30,9 @@ public class SwaggerConfig implements WebMvcConfigurer {
         return new Docket(DocumentationType.SWAGGER_2)
                 .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo())
+                .tags(
+                        new Tag("member", "회원 관련 api")
+                )
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("link.projectjg.apiserver"))
                 .paths(PathSelectors.any())
