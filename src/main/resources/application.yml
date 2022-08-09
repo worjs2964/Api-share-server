@@ -9,11 +9,11 @@ spring:
       hibernate:
         format_sql: true
 
-  # ???, ?? ??
+  # 메시지, 에러 메시지 설정
   messages:
     basename: messages, errors
 
-  # Swagger ??
+  # Swagger 설정
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
