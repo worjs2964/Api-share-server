@@ -1,5 +1,6 @@
 package link.projectjg.apiserver.exception.advice;
 
+import link.projectjg.apiserver.exception.CustomException;
 import link.projectjg.apiserver.exception.ErrorCode;
 import link.projectjg.apiserver.exception.ErrorContent;
 import link.projectjg.apiserver.exception.ErrorResponse;
@@ -56,7 +57,7 @@ public class RestApiAdvice {
     // errors.properties 에 저장된 메시지 사용
     private String getMessage(ObjectError error) {
         return Arrays.stream(Objects.requireNonNull(error.getCodes()))
-                .map(c -> {
+                .map(c-> {
                     Object[] arguments = error.getArguments();
                     Locale locale = LocaleContextHolder.getLocale();
                     try {
@@ -67,6 +68,12 @@ public class RestApiAdvice {
                 }).filter(Objects::nonNull)
                 .findFirst()
                 .orElse(error.getDefaultMessage());
+    }
+
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<ErrorResponse> CustomException(CustomException e, HttpServletRequest request) {
+        log.error("URI: ({}){}",request.getMethod(), request.getRequestURI(), e);
+        return ErrorResponse.toResponseEntity(e.getErrorCode());
     }
 
     @ExceptionHandler(Exception.class)
