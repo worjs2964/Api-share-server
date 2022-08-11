@@ -1,4 +1,4 @@
-package link.projectjg.apiserver.dto.authotication;
+package link.projectjg.apiserver.dto.authentication;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
