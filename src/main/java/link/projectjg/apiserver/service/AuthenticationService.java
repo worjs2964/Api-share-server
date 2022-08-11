@@ -3,7 +3,7 @@ package link.projectjg.apiserver.service;
 import link.projectjg.apiserver.domain.LogoutAccessToken;
 import link.projectjg.apiserver.domain.Member;
 import link.projectjg.apiserver.domain.RefreshToken;
-import link.projectjg.apiserver.dto.authotication.*;
+import link.projectjg.apiserver.dto.authentication.*;
 import link.projectjg.apiserver.exception.CustomException;
 import link.projectjg.apiserver.exception.ErrorCode;
 import link.projectjg.apiserver.repository.LogoutAccessTokenRedisRepository;

@@ -6,22 +6,16 @@ import link.projectjg.apiserver.controller.validator.member.MemberJoinReqValidat
 import link.projectjg.apiserver.dto.Response;
 import link.projectjg.apiserver.dto.member.MemberJoinReq;
 import link.projectjg.apiserver.service.MemberService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-
 @Api(tags = {"member"})
 @RequiredArgsConstructor
-@RestController @Transactional
+@RestController
 @RequestMapping("/v1/members")
 public class MemberController {
 
@@ -39,9 +33,9 @@ public class MemberController {
         return new ResponseEntity<>(Response.OK(memberService.joinMember(memberJoinReq)), HttpStatus.OK);
     }
 
-    @GetMapping("/test")
-    public String test(Principal principal) {
-        String name = principal.getName();
-        return "접근 uuid: " + name;
+    @GetMapping("/authentication")
+    @ApiOperation(value = "인증 메일 확인", notes = "인증 메일을 확인합니다. 인증은 메일이 발송된 후 3분안에 완료해야 합니다.")
+    public ResponseEntity<Response> checkEmailToken(@RequestParam("token") String token, @RequestParam("email") String email) {
+        return new ResponseEntity<>(Response.OK(memberService.authenticate(token, email)), HttpStatus.OK);
     }
 }

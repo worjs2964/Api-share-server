@@ -7,6 +7,7 @@ import link.projectjg.apiserver.security.JwtEntryPoint;
 import link.projectjg.apiserver.security.JwtTokenUtil;
 import link.projectjg.apiserver.service.UserDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -54,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .mvcMatchers(HttpMethod.POST, "/v1/members").anonymous()
+                .mvcMatchers("/v1/members/authentication").permitAll()
                 .anyRequest().hasRole("MEMBER");
 
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenUtil, userDetailsServiceImpl, logoutAccessTokenRedisRepository), UsernamePasswordAuthenticationFilter.class)

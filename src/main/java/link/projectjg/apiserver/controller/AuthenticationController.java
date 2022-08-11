@@ -1,10 +1,11 @@
 package link.projectjg.apiserver.controller;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import link.projectjg.apiserver.dto.Response;
-import link.projectjg.apiserver.dto.authotication.LogoutReq;
-import link.projectjg.apiserver.dto.authotication.SignInReq;
-import link.projectjg.apiserver.dto.authotication.TokenReq;
+import link.projectjg.apiserver.dto.authentication.LogoutReq;
+import link.projectjg.apiserver.dto.authentication.SignInReq;
+import link.projectjg.apiserver.dto.authentication.TokenReq;
 import link.projectjg.apiserver.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Api(tags = {"authentication"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/authentication")

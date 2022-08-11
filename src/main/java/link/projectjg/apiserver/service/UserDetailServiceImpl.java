@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserDetailServiceImpl implements UserDetailsService {
 
     private final MemberRepository memberRepository;
+
     @Override
     public MemberAccount loadUserByUsername(String memberUid) throws UsernameNotFoundException {
         Member member = memberRepository.findByMemberUid(memberUid).orElseThrow(() -> new CustomException(ErrorCode.INVALID_AUTH_TOKEN));

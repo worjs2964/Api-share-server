@@ -31,7 +31,9 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo())
                 .tags(
-                        new Tag("member", "회원 관련 api")
+                        new Tag("member", "회원 관련 api"),
+                        new Tag("mail", "메일 관련 api"),
+                        new Tag("authentication", "로그인 관련 api")
                 )
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("link.projectjg.apiserver"))

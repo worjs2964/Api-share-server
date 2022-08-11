@@ -17,7 +17,7 @@ spring:
       matching-strategy: ant_path_matcher
   jwt:
     #  1000(1초) * 60 * 60 * 2 = 2시간
-    accessTokenExpiration: 5 # "#{1000 * 60 * 60 * 2}"
+    accessTokenExpiration: "#{1000 * 60 * 60 * 2}"
     #  1000(1초) * 60 * 60 * 24 * 14 = 2주
     refreshTokenExpiration: "#{1000 * 60 * 60 * 24 * 14}"
 
