@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter @EqualsAndHashCode(of = "id")
+@Getter @EqualsAndHashCode(of = "id")
 @Builder @NoArgsConstructor @AllArgsConstructor
 public class Keyword {
 
@@ -23,4 +23,9 @@ public class Keyword {
     @JsonIgnore
     @ManyToMany
     private List<Member> memberList = new ArrayList<>();
+
+    public static Keyword of(String keyword) {
+        return Keyword.builder()
+                .keyword(keyword).build();
+    }
 }

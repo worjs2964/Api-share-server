@@ -19,10 +19,10 @@ public class KeywordService {
     private final KeywordRepository keywordRepository;
 
     public Set<Keyword> saveKeywords(KeywordReq keywordReq) {
-        return keywordReq.getKeywordSet().stream().map(KeywordDto::getKeyword).map(k ->
+        return keywordReq.getKeywordSet().stream().map(KeywordDto::getKeyword).map(keyword ->
                 // 해당 키워드가 있으면 반환하고 없으면 키워드를 저장하고 반환
-                keywordRepository.findByKeyword(k).orElseGet(() ->
-                        keywordRepository.save(Keyword.builder().keyword(k).build())
+                keywordRepository.findByKeyword(keyword).orElseGet(() ->
+                        keywordRepository.save(Keyword.of(keyword))
                 )
         ).collect(Collectors.toSet());
     }
