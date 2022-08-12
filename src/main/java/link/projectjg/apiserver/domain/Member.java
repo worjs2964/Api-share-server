@@ -1,5 +1,6 @@
 package link.projectjg.apiserver.domain;
 
+import link.projectjg.apiserver.dto.member.MemberJoinReq;
 import link.projectjg.apiserver.exception.CustomException;
 import link.projectjg.apiserver.exception.ErrorCode;
 import lombok.*;
@@ -12,7 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Getter @Setter
+@Getter
 @EqualsAndHashCode(of = "memberUid")
 @Builder
 @NoArgsConstructor @AllArgsConstructor
@@ -34,10 +35,10 @@ public class Member {
 
     private String password;
 
-    private String role = "ROLE_MEMBER";
+    private String role;
 
     // 이메일 인증 관련
-    private Boolean isAuthentication = false;
+    private boolean isAuthentication;
 
     private String authenticationToken;
 
@@ -50,16 +51,27 @@ public class Member {
     private String description;
 
     // 알림 정보
-    private boolean isNotificationByWeb = true;
+    private boolean isNotificationByWeb;
 
-    private boolean isKeywordByWeb = true;
+    private boolean isKeywordByWeb;
 
-    private boolean isNotificationByEmail = false;
+    private boolean isNotificationByEmail ;
 
-    private boolean isKeywordByEmail = false;
+    private boolean isKeywordByEmail;
 
     @ManyToMany
     private Set<Keyword> keywordSet = new HashSet<>();
+
+    public static Member of(MemberJoinReq memberJoinReq) {
+        return Member.builder()
+                .email(memberJoinReq.getEmail())
+                .nickname(memberJoinReq.getNickname())
+                .password(memberJoinReq.getPassword())
+                .role("ROLE_MEMBER")
+                .isNotificationByWeb(true)
+                .isKeywordByWeb(true)
+                .build();
+    }
 
 
     // 회원 기본 데이터 초기화
@@ -90,6 +102,10 @@ public class Member {
         } else {
             throw new CustomException(ErrorCode.INVALID_URL);
         }
+    }
+
+    public void setKeywordSet(Set<Keyword> keywordSet) {
+        this.keywordSet = keywordSet;
     }
 
     public void encodePassword(PasswordEncoder passwordEncoder) {
