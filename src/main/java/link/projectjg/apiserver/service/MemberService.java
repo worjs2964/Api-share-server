@@ -1,6 +1,8 @@
 package link.projectjg.apiserver.service;
 
+import link.projectjg.apiserver.domain.Keyword;
 import link.projectjg.apiserver.domain.Member;
+import link.projectjg.apiserver.dto.keyword.KeywordRes;
 import link.projectjg.apiserver.dto.member.MemberJoinReq;
 import link.projectjg.apiserver.dto.member.MemberJoinRes;
 import link.projectjg.apiserver.exception.CustomException;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -65,5 +69,10 @@ public class MemberService {
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new CustomException(ErrorCode.INVALID_URL));
         member.authenticate(token);
         return email + " 계정의 인증이 완료되었습니다.";
+    }
+
+    public KeywordRes addKeywords(Member member, Set<Keyword> keywords) {
+        member.setKeywordSet(keywords);
+        return modelMapper.map(memberRepository.save(member), KeywordRes.class);
     }
 }

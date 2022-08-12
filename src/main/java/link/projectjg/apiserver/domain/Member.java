@@ -5,11 +5,10 @@ import link.projectjg.apiserver.exception.ErrorCode;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -43,6 +42,25 @@ public class Member {
     private String authenticationToken;
 
     private LocalDateTime tokenIssuanceTime;
+
+    // 프로필 정보
+    private int point;
+
+    @Lob
+    private String description;
+
+    // 알림 정보
+    private boolean isNotificationByWeb = true;
+
+    private boolean isKeywordByWeb = true;
+
+    private boolean isNotificationByEmail = false;
+
+    private boolean isKeywordByEmail = false;
+
+    @ManyToMany
+    private Set<Keyword> keywordSet = new HashSet<>();
+
 
     // 회원 기본 데이터 초기화
     public void init() {
