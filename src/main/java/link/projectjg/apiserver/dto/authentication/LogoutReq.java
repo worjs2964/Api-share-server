@@ -7,10 +7,10 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 @Data
-@ApiModel(value = "로그아웃 req", description = "accessToken을 전송")
+@ApiModel(value = "로그아웃 요청 DTO", description = "액세스 토큰을 입력 받습니다.")
 public class LogoutReq {
 
-    @ApiModelProperty(value = "access 토큰", example = "access token 값", required = true)
+    @ApiModelProperty(value = "액세스 토큰", example = "액세스 토큰 값", required = true)
     @NotBlank
     private String accessToken;
 }

@@ -23,8 +23,8 @@ public class MailController {
     private final MemberService memberService;
 
     @PostMapping("/resend-authentication-mail")
-    @ApiOperation(value = "인증 메일 재전송", notes = "재전송은 인증되지 않은 회원이 인증 메일을 보낸지 1분 이상 지났을 때 보낼 수 있습니다.")
-    public ResponseEntity<Response> resendAuthenticationEmail(@ApiIgnore Principal principal) {
+    @ApiOperation(value = "인증 메일 재전송 요청", notes = "인증 메일을 재전송할 수 있습니다. 단 인증메일은 아직 인증이 되지 않은 회원이 인증 메일을 보낸지 1분이 지나야 보낼 수 있습니다.")
+    public ResponseEntity<Response<String>> resendAuthenticationEmail(@ApiIgnore Principal principal) {
         return new ResponseEntity<>(Response.OK(memberService.resendAuthenticationEmail(principal.getName())), HttpStatus.OK);
     }
 }

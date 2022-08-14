@@ -1,6 +1,6 @@
 package link.projectjg.apiserver.domain;
 
-import link.projectjg.apiserver.dto.member.MemberJoinReq;
+import link.projectjg.apiserver.domain.share.Share;
 import link.projectjg.apiserver.exception.CustomException;
 import link.projectjg.apiserver.exception.ErrorCode;
 import lombok.*;
@@ -8,9 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Getter
@@ -60,7 +58,13 @@ public class Member {
     private boolean isKeywordByEmail;
 
     @ManyToMany
+    @JoinTable(name = "member_keyword")
     private Set<Keyword> keywordSet = new HashSet<>();
+
+    @OneToMany(mappedBy = "master")
+    private List<Share> MyShareList = new ArrayList<>();
+
+
 
 
     // 회원 기본 데이터 초기화

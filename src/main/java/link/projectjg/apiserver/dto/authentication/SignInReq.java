@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Data
-@ApiModel(value = "로그인 req", description = "이메일, 페스워드를 입력 받는다.")
+@ApiModel(value = "로그인 요청 DTO", description = "로그인에 필요한 이메일, 패스워드를 입력받습니다.")
 public class SignInReq {
 
     @ApiModelProperty(value = "이메일", example = "rebuild96@naver.com", required = true)

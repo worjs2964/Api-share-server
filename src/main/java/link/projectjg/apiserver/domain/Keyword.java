@@ -21,7 +21,7 @@ public class Keyword {
     private String keyword;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(mappedBy = "keywordSet")
     private List<Member> memberList = new ArrayList<>();
 
 }

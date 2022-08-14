@@ -1,11 +1,13 @@
 package link.projectjg.apiserver.dto.keyword;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+@ApiModel(value = "키워드 DTO", description = "Keyword 정보")
 @Data
 public class KeywordDto {
 

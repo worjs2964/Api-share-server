@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Data
-@ApiModel(value = "회원가입 req", description = "이메일, 닉네임, 페스워드를 입력 받는다.")
+@ApiModel(value = "회원가입 요청 DTO", description = "이메일, 닉네임, 페스워드를 입력 받습니다.")
 public class MemberJoinReq {
 
     @NotBlank

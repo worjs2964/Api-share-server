@@ -54,9 +54,10 @@ public class AuthenticationService {
                 .expiration(REFRESH_TOKEN_EXPIRATION_TIME / 1000).build()).getRefreshToken();
     }
 
-    public void logout(LogoutReq logoutReq) {
+    public String logout(LogoutReq logoutReq) {
         String accessToken = logoutReq.getAccessToken();
         logoutToken(accessToken);
+        return "정상적으로 로그아웃되었습니다.";
     }
 
     public TokenRes reissue(TokenReq tokenReq) {
