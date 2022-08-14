@@ -33,7 +33,7 @@ public class MemberService {
 
     // 회원가입
     public MemberJoinRes joinMember(MemberJoinReq memberJoinReq) {
-        Member member = Member.of(memberJoinReq);
+        Member member = memberJoinReq.toEntity();
         member.init();
         member.encodePassword(passwordEncoder);
         Member saveMember = memberRepository.save(member);

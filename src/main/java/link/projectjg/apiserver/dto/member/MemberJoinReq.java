@@ -2,6 +2,7 @@ package link.projectjg.apiserver.dto.member;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import link.projectjg.apiserver.domain.Member;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -15,7 +16,6 @@ public class MemberJoinReq {
     @NotBlank
     @Email(regexp = "^[a-z0-9]+@[a-z0-9]+\\.[a-z0-9]+$")
     @ApiModelProperty(value = "이메일", example = "rebuild96@naver.com", required = true)
-
     private String email;
 
     @NotBlank
@@ -27,4 +27,15 @@ public class MemberJoinReq {
     @Pattern(regexp = "^.*(?=^.{6,15}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$")
     @ApiModelProperty(value = "패스워드", example = "Password96!", required = true)
     private String password;
+
+    public Member toEntity() {
+        return Member.builder()
+                .email(email)
+                .nickname(nickname)
+                .password(password)
+                .role("ROLE_MEMBER")
+                .isNotificationByWeb(true)
+                .isKeywordByWeb(true)
+                .build();
+    }
 }

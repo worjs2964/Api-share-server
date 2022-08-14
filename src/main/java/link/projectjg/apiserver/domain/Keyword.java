@@ -24,8 +24,4 @@ public class Keyword {
     @ManyToMany
     private List<Member> memberList = new ArrayList<>();
 
-    public static Keyword of(String keyword) {
-        return Keyword.builder()
-                .keyword(keyword).build();
-    }
 }

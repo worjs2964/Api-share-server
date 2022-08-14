@@ -22,7 +22,7 @@ public class KeywordService {
         return keywordReq.getKeywordSet().stream().map(KeywordDto::getKeyword).map(keyword ->
                 // 해당 키워드가 있으면 반환하고 없으면 키워드를 저장하고 반환
                 keywordRepository.findByKeyword(keyword).orElseGet(() ->
-                        keywordRepository.save(Keyword.of(keyword))
+                        keywordRepository.save(KeywordReq.toEntity(keyword))
                 )
         ).collect(Collectors.toSet());
     }

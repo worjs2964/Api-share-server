@@ -62,17 +62,6 @@ public class Member {
     @ManyToMany
     private Set<Keyword> keywordSet = new HashSet<>();
 
-    public static Member of(MemberJoinReq memberJoinReq) {
-        return Member.builder()
-                .email(memberJoinReq.getEmail())
-                .nickname(memberJoinReq.getNickname())
-                .password(memberJoinReq.getPassword())
-                .role("ROLE_MEMBER")
-                .isNotificationByWeb(true)
-                .isKeywordByWeb(true)
-                .build();
-    }
-
 
     // 회원 기본 데이터 초기화
     public void init() {
