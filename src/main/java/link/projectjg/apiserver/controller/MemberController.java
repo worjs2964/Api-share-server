@@ -42,4 +42,5 @@ public class MemberController {
     public ResponseEntity<Response<String>> checkEmailToken(@RequestParam("token") String token, @RequestParam("email") String email) {
         return new ResponseEntity<>(Response.OK(memberService.authenticate(token, email)), HttpStatus.OK);
     }
+
 }

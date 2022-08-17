@@ -1,6 +1,7 @@
 package link.projectjg.apiserver.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import link.projectjg.apiserver.domain.share.Share;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,8 +21,10 @@ public class Keyword {
     @Column(unique = true, nullable = false)
     private String keyword;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "keywordSet")
     private List<Member> memberList = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "keywordSet")
+    private List<Share> shareList = new ArrayList<>();
 
 }

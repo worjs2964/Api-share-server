@@ -10,6 +10,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -74,6 +75,12 @@ public class RestApiAdvice {
     public ResponseEntity<ErrorResponse> CustomException(CustomException e, HttpServletRequest request) {
         log.error("URI: ({}){}",request.getMethod(), request.getRequestURI(), e);
         return ErrorResponse.toResponseEntity(e.getErrorCode());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> CustomException(AccessDeniedException e, HttpServletRequest request) {
+        log.error("URI: ({}){}",request.getMethod(), request.getRequestURI(), e);
+        return ErrorResponse.toResponseEntity(ErrorCode.DENIED_AUTH_TOKEN);
     }
 
     @ExceptionHandler(Exception.class)

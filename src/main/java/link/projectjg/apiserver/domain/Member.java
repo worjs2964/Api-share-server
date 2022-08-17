@@ -64,7 +64,8 @@ public class Member {
     @OneToMany(mappedBy = "master")
     private List<Share> MyShareList = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "member")
+    private List<MemberShare> memberShares = new ArrayList<>();
 
 
     // 회원 기본 데이터 초기화

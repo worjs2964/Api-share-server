@@ -34,7 +34,7 @@ public class SettingsController {
     @PutMapping("/keywords")
     @ApiOperation(value = "회원 관심사 등록/삭제 요청", notes = "전송받은 키워드 목록으로 회원 관심사 키워드를 변경합니다.")
     public ResponseEntity<Response<KeywordRes>> addKeywords(@ApiIgnore @CurrentMember Member member, @Validated @RequestBody KeywordReq keywordReq) {
-        Set<Keyword> keywords = keywordService.saveKeywords(keywordReq);
+        Set<Keyword> keywords = keywordService.saveKeywords(keywordReq.getKeywordSet());
         return new ResponseEntity<>(Response.OK(memberService.addKeywords(member, keywords)), HttpStatus.OK);
     }
 }

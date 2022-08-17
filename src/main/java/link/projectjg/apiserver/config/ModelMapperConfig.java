@@ -13,6 +13,9 @@ public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapper() {
         modelMapper.getConfiguration()
+                .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
+                .setFieldMatchingEnabled(true)
+                .setSkipNullEnabled(true)
                 .setMatchingStrategy(MatchingStrategies.STANDARD);
         return modelMapper;
     }

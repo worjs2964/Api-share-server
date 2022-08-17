@@ -55,7 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .mvcMatchers(HttpMethod.POST, "/v1/members").anonymous()
+                .mvcMatchers("/v1/shares").hasRole("CHECKED_MEMBER")
                 .mvcMatchers("/v1/members/authentication").permitAll()
+                .mvcMatchers("/v1/payment/**").permitAll()
                 .anyRequest().hasRole("MEMBER");
 
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenUtil, userDetailsServiceImpl, logoutAccessTokenRedisRepository), UsernamePasswordAuthenticationFilter.class)
