@@ -35,4 +35,15 @@ public class VisibleShare implements ShareStateOperation {
         return share;
     }
 
+    @Override
+    public boolean isCanNotify(Share share) {
+        if (share.isAlreadyNotify()) {
+            // 이미 알림을 보냈으면 더 이상 알림을 보낼 수 없음
+            return false;
+        } else {
+            share.changeAlreadyNotify();
+            return true;
+        }
+    }
+
 }

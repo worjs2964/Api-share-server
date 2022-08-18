@@ -55,6 +55,8 @@ public class Share {
 
     private LocalDate shareTerminateDate;
 
+    private boolean isAlreadyNotify;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Member master;
 
@@ -83,6 +85,10 @@ public class Share {
         return shareState.changeVisible(this);
     }
 
+    public boolean isCanNotify() {
+        return shareState.isCanNotify(this);
+    }
+
     // 공유의 주인인지
     public boolean isMaster(Member member) {
         return this.master.equals(member) ? true : false;
@@ -107,5 +113,13 @@ public class Share {
 
     public boolean isFull() {
         return memberShares.size() == numberRecruits;
+    }
+
+    public void setKeywordSet(Set<Keyword> keywordSet) {
+        this.keywordSet = keywordSet;
+    }
+
+    public void changeAlreadyNotify() {
+        this.isAlreadyNotify = true;
     }
 }

@@ -17,8 +17,7 @@ public class AsyncConfig implements AsyncConfigurer {
         int processors = Runtime.getRuntime().availableProcessors();
         executor.setCorePoolSize(processors);
         executor.setMaxPoolSize(processors * 2);
-        executor.setQueueCapacity(40);
-        executor.setKeepAliveSeconds(60);
+        executor.setQueueCapacity(100);
         executor.initialize();
         return executor;
     }

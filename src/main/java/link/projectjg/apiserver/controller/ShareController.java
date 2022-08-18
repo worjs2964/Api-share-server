@@ -1,10 +1,13 @@
 package link.projectjg.apiserver.controller;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import link.projectjg.apiserver.annotation.CurrentMember;
 import link.projectjg.apiserver.domain.Keyword;
 import link.projectjg.apiserver.domain.Member;
+import link.projectjg.apiserver.domain.share.ContentType;
 import link.projectjg.apiserver.domain.share.Share;
 import link.projectjg.apiserver.dto.Response;
 import link.projectjg.apiserver.dto.kakao.ReadyPayRes;
@@ -49,7 +52,11 @@ public class ShareController {
     public ResponseEntity<Response<ShareRes>> editShare(@ApiIgnore @CurrentMember Member member,
                                                                      @PathVariable("id") Share share,
                                                                      @Validated @RequestBody EditShareReq editShareReq) {
-        return new ResponseEntity<>(Response.OK(shareService.editShare(share, editShareReq)), HttpStatus.OK);
+        Set<Keyword> keywords = null;
+        if (editShareReq.getKeywordSet() != null) {
+            keywords = keywordService.saveKeywords(editShareReq.getKeywordSet());
+        }
+        return new ResponseEntity<>(Response.OK(shareService.editShare(share, editShareReq, keywords)), HttpStatus.OK);
     }
 
     @PostMapping("/{id}/state")
@@ -59,6 +66,15 @@ public class ShareController {
     public ResponseEntity<Response<ChangeVisibleShareRes>> changeVisibleShare(@ApiIgnore @CurrentMember Member member,
                                                                               @PathVariable("id") Share share) {
         return new ResponseEntity<>(Response.OK(shareService.changeVisibleShare(share)), HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/notify")
+    @ApiOperation(value = "공유 키워드 알림 요청",
+            notes = "관심 키워드를 지정한 회원들에게 알림을 보냅니다. 알림은 공유 당 1회 보낼 수 있으며, 공개 상태인 공유(VISIBLE)만 보낼 수 있습니다.")
+    @PreAuthorize("@authorizationChecker.isMaster(#member, #share)")
+    public ResponseEntity<Response<String>> notifyShare(@ApiIgnore @CurrentMember Member member,
+                                                                              @PathVariable("id") Share share) {
+        return new ResponseEntity<>(Response.OK(shareService.notifyShare(share)), HttpStatus.OK);
     }
 
     @PostMapping("/{id}/join")

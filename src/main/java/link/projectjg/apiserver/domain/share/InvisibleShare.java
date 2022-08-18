@@ -35,4 +35,9 @@ public class InvisibleShare implements ShareStateOperation {
         share.changeState(ShareState.VISIBLE);
         return share;
     }
+
+    @Override
+    public boolean isCanNotify(Share share) {
+        throw new CustomException(ErrorCode.INVALID_NOTIFY_SHARE);
+    }
 }

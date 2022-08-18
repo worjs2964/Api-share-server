@@ -7,12 +7,14 @@ import link.projectjg.apiserver.domain.share.ShareState;
 import link.projectjg.apiserver.dto.kakao.ApprovePayRes;
 import link.projectjg.apiserver.dto.kakao.ReadyPayRes;
 import link.projectjg.apiserver.dto.share.JoinShareRes;
+import link.projectjg.apiserver.event.share.ShareJoinEvent;
 import link.projectjg.apiserver.exception.CustomException;
 import link.projectjg.apiserver.exception.ErrorCode;
-import link.projectjg.apiserver.repository.ShareRepostiory;
+import link.projectjg.apiserver.repository.ShareRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,7 +32,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class PayService {
 
-    private final ShareRepostiory shareRepostiory;
+    private final ShareRepository shareRepository;
+    private final ApplicationEventPublisher eventPublisher;
     private final ModelMapper modelMapper;
 
     private ConcurrentHashMap<String, String> tidRepository = new ConcurrentHashMap<>();
@@ -78,7 +81,7 @@ public class PayService {
                 ResponseEntity<ApprovePayRes> res = restTemplate.postForEntity(new URI("https://kapi.kakao.com/v1/payment/approve"), httpEntity, ApprovePayRes.class);
                 // 승인이 성공적으로 이루어지면
                 if (res.getStatusCode() == HttpStatus.OK) {
-                    return modelMapper.map(shareRepostiory.save(joinShare(share, member, res)), JoinShareRes.class);
+                    return modelMapper.map(shareRepository.save(joinShare(share, member, res)), JoinShareRes.class);
                 } else {
                     throw new CustomException(ErrorCode.INVALID_APPROVED_PAY);
                 }
@@ -102,6 +105,9 @@ public class PayService {
                 .paymentMethodType(resBody.getPaymentMethodType()).build();
 
         share.getMemberShares().add(memberShare);
+        share.getMaster().plusPoint(share.getTotalCost());
+
+        eventPublisher.publishEvent(new ShareJoinEvent(share, member));
 
         if (share.isFull()) {
             share.changeState(ShareState.FULL);

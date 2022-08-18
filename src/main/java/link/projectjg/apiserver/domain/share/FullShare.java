@@ -32,4 +32,9 @@ public class FullShare implements ShareStateOperation {
         throw new CustomException(ErrorCode.INVALID_CHANGE_VISIBLE);
     }
 
+    @Override
+    public boolean isCanNotify(Share share) {
+        throw new CustomException(ErrorCode.INVALID_NOTIFY_SHARE);
+    }
+
 }

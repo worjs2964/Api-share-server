@@ -10,4 +10,6 @@ public interface ShareStateOperation {
 
     Share changeVisible(Share share);
 
+    boolean isCanNotify(Share share);
+
 }

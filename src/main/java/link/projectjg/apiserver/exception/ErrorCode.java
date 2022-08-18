@@ -21,6 +21,8 @@ public enum ErrorCode {
     INVALID_CHANGE_VISIBLE(BAD_REQUEST, "해당 공유는 공개/비공개로 변경하실 수 없습니다."),
     INVALID_SET_KEYWORD(BAD_REQUEST, "해당 공유는 키워드를 변경할 수 없습니다."),
     INVALID_EDIT_SHARE(BAD_REQUEST, "해당 공유는 수정할 수 없습니다."),
+    INVALID_NOTIFY_SHARE(BAD_REQUEST, "공유 알림은 공개 상태(VISIBLE)만 보낼 수 있습니다."),
+    INVALID_ALREADY_NOTIFY(BAD_REQUEST, "공유 알림은 한번만 보낼 수 있습니다."),
     INVALID_EDIT_RECRUIT(BAD_REQUEST, "모집인원은 참여인원보다 적을 수 없습니다."),
 
     /* 401 UNAUTHORIZED : 인증되지 않은 사용자 */

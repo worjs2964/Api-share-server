@@ -17,8 +17,7 @@ import java.util.*;
 @NoArgsConstructor @AllArgsConstructor
 public class Member {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     @Column(name = "member_id")
     private Long id;
 
@@ -104,5 +103,9 @@ public class Member {
 
     public void encodePassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
+    }
+
+    public void plusPoint(long totalCost) {
+        this.point += totalCost;
     }
 }

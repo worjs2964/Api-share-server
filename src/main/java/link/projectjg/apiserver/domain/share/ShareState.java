@@ -29,4 +29,9 @@ public enum ShareState implements ShareStateOperation {
         return operations.changeVisible(share);
     }
 
+    @Override
+    public boolean isCanNotify(Share share) {
+        return operations.isCanNotify(share);
+    }
+
 }
