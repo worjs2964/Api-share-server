@@ -42,8 +42,8 @@ public class ShareController {
             notes = "공유 목록을 검색합니다. 페이지 번호는 0부터 시작하며 조건을 입력하지 않으면 모든 내용이 검색됩니다. \n" +
                     "ex) ...?page=0&size=20 -> 최신 공유 20개 검색, ...?contentType=VIDEO&page=0&size=20 -> 영상 공유 20개 검색")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "페이지 번호", required = false, dataType = "string", paramType = "query", defaultValue = "0"),
-            @ApiImplicitParam(name = "size", value = "페이지 당 사이즈", required = false, dataType = "string", paramType = "query", defaultValue = "20")
+            @ApiImplicitParam(name = "page", value = "페이지 번호", dataType = "string", paramType = "query", defaultValue = "0"),
+            @ApiImplicitParam(name = "size", value = "페이지 당 사이즈", dataType = "string", paramType = "query", defaultValue = "20")
     })
     public ResponseEntity<Response<SearchShareListRes>> showShareList(@ApiIgnore @PageableDefault(size = 20) Pageable pageable,
                                                                       SearchShareListReq searchShareListReq) {
@@ -61,7 +61,7 @@ public class ShareController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "공유 검색 (단건)",
-            notes = "공유를 검색합니다. 검색 결과는 공유의 주인, 참여자, 그 외에 따라 볼 수 없는 항목은 null로 내려옵니다.")
+            notes = "공유를 검색합니다. 검색 결과는 공유의 주인, 참여자, 그 외에 따라 볼 수 있는 항목의 차이가 있습니다.")
     public ResponseEntity<Response<SearchShareRes>> showShare(@ApiIgnore @CurrentMember Member member, @PathVariable("id") Long shareId) {
         return new ResponseEntity<>(Response.OK(shareService.showShare(shareId, member)), HttpStatus.OK);
     }
