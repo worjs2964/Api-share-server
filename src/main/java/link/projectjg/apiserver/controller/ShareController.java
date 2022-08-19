@@ -10,8 +10,6 @@ import link.projectjg.apiserver.domain.Member;
 import link.projectjg.apiserver.domain.share.Share;
 import link.projectjg.apiserver.dto.Response;
 import link.projectjg.apiserver.dto.kakao.ReadyPayRes;
-import link.projectjg.apiserver.dto.keyword.KeywordReq;
-import link.projectjg.apiserver.dto.keyword.KeywordRes;
 import link.projectjg.apiserver.dto.share.*;
 import link.projectjg.apiserver.service.KeywordService;
 import link.projectjg.apiserver.service.ShareService;
@@ -21,7 +19,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -100,7 +97,7 @@ public class ShareController {
         return new ResponseEntity<>(Response.OK(shareService.changeVisibleShare(share)), HttpStatus.OK);
     }
 
-    @PutMapping("/keywords/{id}")
+    @PutMapping("/{id}/keywords")
     @ApiOperation(value = "공유 키워드 등록/삭제 요청", notes = "전송받은 키워드 목록으로 키워드를 변경합니다. 키워드는 3개까지 등록이 가능합니다.")
     @PreAuthorize("@authorizationChecker.isMaster(#member, #share)")
     public ResponseEntity<Response<ShareRes>> addKeywords(@ApiIgnore @CurrentMember Member member,
