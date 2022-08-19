@@ -19,11 +19,11 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Set;
 
-@Api(tags = {"setting"})
+@Api(tags = {"profile"})
 @RestController
-@RequestMapping("/v1/settings")
+@RequestMapping("/v1/profile")
 @RequiredArgsConstructor
-public class SettingsController {
+public class ProfileController {
 
     private final KeywordService keywordService;
     private final MemberService memberService;
