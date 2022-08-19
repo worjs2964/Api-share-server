@@ -12,11 +12,13 @@ import link.projectjg.apiserver.dto.keyword.KeywordReq;
 import link.projectjg.apiserver.dto.keyword.KeywordRes;
 import link.projectjg.apiserver.dto.member.MemberJoinReq;
 import link.projectjg.apiserver.dto.member.MemberJoinRes;
+import link.projectjg.apiserver.dto.member.MemberProfileRes;
 import link.projectjg.apiserver.service.KeywordService;
 import link.projectjg.apiserver.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +46,13 @@ public class MemberController {
     @ApiOperation(value = "회원 가입 요청", notes = "회원 가입을 진행합니다. 정상적으로 회원가입이 완료되면 응답으로 생성된 회원에 이메일, 닉네임을 반환합니다.")
     public ResponseEntity<Response<MemberJoinRes>> joinMember(@Validated @RequestBody MemberJoinReq memberJoinReq) {
         return new ResponseEntity<>(Response.OK(memberService.joinMember(memberJoinReq)), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "회원 프로필 확인",
+            notes = "회원의 프로필을 확인합니다. 타인의 프로필인 경우 id, nickname, description, shareList(VISIBLE인 공유)에 대한 정보만 확인할 수 있습니다.")
+    public ResponseEntity<Response<MemberProfileRes>> showProfile(@ApiIgnore @CurrentMember Member member, @PathVariable Long id) {
+        return new ResponseEntity<>(Response.OK(memberService.showProfile(member, id)), HttpStatus.OK);
     }
 
     @PostMapping("/authentication")

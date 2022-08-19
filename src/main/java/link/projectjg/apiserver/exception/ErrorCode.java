@@ -35,6 +35,7 @@ public enum ErrorCode {
     REQUEST_NOT_FOUND(NOT_FOUND, "해당 요청이 존재하지 않습니다."),
     ARGUMENT_NOT_FOUND(NOT_FOUND, "해당 정보를 찾을 수 없습니다."),
     SHARE_NOT_FOUND(NOT_FOUND, "해당 공유를 찾을 수 없습니다."),
+    MEMBER_NOT_FOUND(NOT_FOUND, "해당 회원을 찾을 수 없습니다."),
 
     /* 500 Server Error : 서버 에러 */
     SERVER_ERROR(INTERNAL_SERVER_ERROR, "알 수 없는 서버 에러가 발생하였습니다.");

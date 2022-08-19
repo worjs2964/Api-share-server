@@ -2,9 +2,13 @@ package link.projectjg.apiserver.service;
 
 import link.projectjg.apiserver.domain.Keyword;
 import link.projectjg.apiserver.domain.Member;
+import link.projectjg.apiserver.domain.MemberShare;
+import link.projectjg.apiserver.domain.share.Share;
+import link.projectjg.apiserver.domain.share.ShareState;
 import link.projectjg.apiserver.dto.keyword.KeywordRes;
 import link.projectjg.apiserver.dto.member.MemberJoinReq;
 import link.projectjg.apiserver.dto.member.MemberJoinRes;
+import link.projectjg.apiserver.dto.member.MemberProfileRes;
 import link.projectjg.apiserver.exception.CustomException;
 import link.projectjg.apiserver.exception.ErrorCode;
 import link.projectjg.apiserver.mail.EmailMessage;
@@ -18,7 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +45,24 @@ public class MemberService {
         Member saveMember = memberRepository.save(member);
         sendEmailCheckToken(member);
         return modelMapper.map(saveMember, MemberJoinRes.class);
+    }
+
+    public MemberProfileRes showProfile(Member member, Long id) {
+        Member findMember = memberRepository.findWithShareListById(id).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        List<Share> myShareList = findMember.getMyShareList();
+
+        if (findMember.equals(member)) {
+            // 참여 중인 공유 확인
+            List<Share> participatedShareList = findMember.getMemberShares().stream()
+                    .map(MemberShare::getShare).collect(Collectors.toList());
+            return MemberProfileRes.of(findMember, myShareList, participatedShareList);
+        } else {
+            // 해당 회원의 공유 중 모집 중인 공유만 볼 수 있게 설정
+            List<Share> shareList = myShareList.stream().filter(share ->
+                    share.getShareState().equals(ShareState.VISIBLE)
+            ).collect(Collectors.toList());
+            return MemberProfileRes.of(findMember, shareList);
+        }
     }
 
     // 인증 메일 재전송
