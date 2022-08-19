@@ -85,8 +85,12 @@ public class Share {
         return shareState.changeVisible(this);
     }
 
-    public boolean isCanNotify() {
-        return shareState.isCanNotify(this);
+    public boolean canNotify() {
+        return shareState.canNotify(this);
+    }
+
+    public boolean canChangeKeyword() {
+        return shareState.canChangeKeyword(this);
     }
 
     // 공유의 주인인지

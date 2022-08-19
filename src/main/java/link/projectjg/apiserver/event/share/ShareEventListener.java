@@ -114,7 +114,6 @@ public class ShareEventListener {
                 .message(message).build());
     }
 
-
     // 웹 알림
     private void sendByWeb(Member member, NotificationDto notificationDto) {
         notificationRepository.save(Notification.builder()

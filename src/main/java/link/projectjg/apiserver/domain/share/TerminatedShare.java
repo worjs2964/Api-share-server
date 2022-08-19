@@ -17,12 +17,17 @@ public class TerminatedShare implements ShareStateOperation {
     }
 
     @Override
+    public boolean canChangeKeyword(Share share) {
+        throw new CustomException(ErrorCode.INVALID_SET_KEYWORD);
+    }
+
+    @Override
     public Share changeVisible(Share share) {
         throw new CustomException(ErrorCode.INVALID_CHANGE_VISIBLE);
     }
 
     @Override
-    public boolean isCanNotify(Share share) {
+    public boolean canNotify(Share share) {
         throw new CustomException(ErrorCode.INVALID_NOTIFY_SHARE);
     }
 

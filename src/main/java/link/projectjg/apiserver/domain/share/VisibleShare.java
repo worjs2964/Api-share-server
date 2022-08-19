@@ -16,7 +16,6 @@ public class VisibleShare implements ShareStateOperation {
 
     @Override
     public Share editShare(Share share) {
-
         List<MemberShare> memberShares = share.getMemberShares();
 
         // 참여 인원이 있다면
@@ -30,13 +29,18 @@ public class VisibleShare implements ShareStateOperation {
     }
 
     @Override
+    public boolean canChangeKeyword(Share share) {
+        return true;
+    }
+
+    @Override
     public Share changeVisible(Share share) {
         share.changeState(ShareState.INVISIBLE);
         return share;
     }
 
     @Override
-    public boolean isCanNotify(Share share) {
+    public boolean canNotify(Share share) {
         if (share.isAlreadyNotify()) {
             // 이미 알림을 보냈으면 더 이상 알림을 보낼 수 없음
             return false;

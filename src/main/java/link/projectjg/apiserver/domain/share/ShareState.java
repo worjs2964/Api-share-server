@@ -25,13 +25,18 @@ public enum ShareState implements ShareStateOperation {
     }
 
     @Override
+    public boolean canChangeKeyword(Share share) {
+        return operations.canChangeKeyword(share);
+    }
+
+    @Override
     public Share changeVisible(Share share) {
         return operations.changeVisible(share);
     }
 
     @Override
-    public boolean isCanNotify(Share share) {
-        return operations.isCanNotify(share);
+    public boolean canNotify(Share share) {
+        return operations.canNotify(share);
     }
 
 }

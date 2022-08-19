@@ -16,15 +16,18 @@ public class FullShare implements ShareStateOperation {
 
     @Override
     public Share editShare(Share share) {
-
         List<MemberShare> memberShares = share.getMemberShares();
 
         // 참여 인원보다 모집인원이 작으면 안되고
         if (memberShares.size() > share.getNumberRecruits()) throw new CustomException(ErrorCode.INVALID_EDIT_RECRUIT);
-
         // 모집인원이 늘어났으면 모집 상태로 바꿔준다.
         if (!share.isFull()) share.changeState(ShareState.VISIBLE);
         return share;
+    }
+
+    @Override
+    public boolean canChangeKeyword(Share share) {
+        throw new CustomException(ErrorCode.INVALID_SET_KEYWORD);
     }
 
     @Override
@@ -33,7 +36,7 @@ public class FullShare implements ShareStateOperation {
     }
 
     @Override
-    public boolean isCanNotify(Share share) {
+    public boolean canNotify(Share share) {
         throw new CustomException(ErrorCode.INVALID_NOTIFY_SHARE);
     }
 

@@ -8,8 +8,10 @@ public interface ShareStateOperation {
 
     Share editShare(Share share);
 
+    boolean canChangeKeyword(Share share);
+
     Share changeVisible(Share share);
 
-    boolean isCanNotify(Share share);
+    boolean canNotify(Share share);
 
 }

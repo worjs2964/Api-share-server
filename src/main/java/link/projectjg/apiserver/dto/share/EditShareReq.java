@@ -41,10 +41,4 @@ public class EditShareReq {
     @ApiModelProperty(value = "공유 종료일", example = "2022-12-31")
     @FutureOrPresent
     private LocalDate shareTerminateDate;
-
-    @ApiModelProperty(value = "공유 키워드")
-    @Size(max = 3)
-    @Valid
-    private Set<KeywordDto> keywordSet;
-
 }

@@ -16,7 +16,6 @@ public class InvisibleShare implements ShareStateOperation {
 
     @Override
     public Share editShare(Share share) {
-
         List<MemberShare> memberShares = share.getMemberShares();
 
         // 참여 인원이 있다면
@@ -31,13 +30,18 @@ public class InvisibleShare implements ShareStateOperation {
     }
 
     @Override
+    public boolean canChangeKeyword(Share share) {
+        return true;
+    }
+
+    @Override
     public Share changeVisible(Share share) {
         share.changeState(ShareState.VISIBLE);
         return share;
     }
 
     @Override
-    public boolean isCanNotify(Share share) {
+    public boolean canNotify(Share share) {
         throw new CustomException(ErrorCode.INVALID_NOTIFY_SHARE);
     }
 }

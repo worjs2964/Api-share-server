@@ -55,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .mvcMatchers(HttpMethod.POST, "/v1/members").anonymous()
+                .mvcMatchers(HttpMethod.GET, "/v1/shares", "/v1/shares/{id}").permitAll()
                 .mvcMatchers("/v1/shares").hasRole("CHECKED_MEMBER")
                 .mvcMatchers("/v1/members/authentication").permitAll()
                 .mvcMatchers("/v1/payment/**").permitAll()
@@ -74,6 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-resources", "/configuration/security",
                 "/swagger-ui.html", "/webjars/**","/swagger/**");
 
-        web.ignoring().antMatchers("/v1/authentication/**");
+        web.ignoring()
+                .antMatchers("/v1/authentication/**");
     }
 }
