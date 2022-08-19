@@ -5,10 +5,14 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import link.projectjg.apiserver.annotation.CurrentMember;
 import link.projectjg.apiserver.controller.validator.member.MemberJoinReqValidator;
+import link.projectjg.apiserver.domain.Keyword;
 import link.projectjg.apiserver.domain.Member;
 import link.projectjg.apiserver.dto.Response;
+import link.projectjg.apiserver.dto.keyword.KeywordReq;
+import link.projectjg.apiserver.dto.keyword.KeywordRes;
 import link.projectjg.apiserver.dto.member.MemberJoinReq;
 import link.projectjg.apiserver.dto.member.MemberJoinRes;
+import link.projectjg.apiserver.service.KeywordService;
 import link.projectjg.apiserver.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.security.Principal;
+import java.util.Set;
 
 @Api(tags = {"member"})
 @RequiredArgsConstructor
@@ -27,9 +32,10 @@ import java.security.Principal;
 public class MemberController {
 
     private final MemberService memberService;
+    private final KeywordService keywordService;
     private final MemberJoinReqValidator memberJoinReqValidator;
 
-    @InitBinder
+    @InitBinder("memberJoinReq")
     public void init(WebDataBinder dataBinder) {
         dataBinder.addValidators(memberJoinReqValidator);
     }
@@ -40,16 +46,23 @@ public class MemberController {
         return new ResponseEntity<>(Response.OK(memberService.joinMember(memberJoinReq)), HttpStatus.OK);
     }
 
+    @PostMapping("/authentication")
+    @ApiOperation(value = "인증 메일 재전송 요청", notes = "인증 메일을 재전송할 수 있습니다. 단 인증메일은 아직 인증이 되지 않은 회원이 인증 메일을 보낸지 1분이 지나야 보낼 수 있습니다.")
+    public ResponseEntity<Response<String>> resendAuthenticationEmail(@ApiIgnore Principal principal) {
+        return new ResponseEntity<>(Response.OK(memberService.resendAuthenticationEmail(principal.getName())), HttpStatus.OK);
+    }
+
     @GetMapping("/authentication")
     @ApiOperation(value = "인증 메일 확인", notes = "인증 메일을 확인용 요청입니다. 인증은 메일이 발송된 후 3분안에 완료해야 합니다.")
     public ResponseEntity<Response<String>> checkEmailToken(@RequestParam("token") String token, @RequestParam("email") String email) {
         return new ResponseEntity<>(Response.OK(memberService.authenticate(token, email)), HttpStatus.OK);
     }
 
-    @PostMapping("/authenticatio")
-    @ApiOperation(value = "인증 메일 재전송 요청", notes = "인증 메일을 재전송할 수 있습니다. 단 인증메일은 아직 인증이 되지 않은 회원이 인증 메일을 보낸지 1분이 지나야 보낼 수 있습니다.")
-    public ResponseEntity<Response<String>> resendAuthenticationEmail(@ApiIgnore Principal principal) {
-        return new ResponseEntity<>(Response.OK(memberService.resendAuthenticationEmail(principal.getName())), HttpStatus.OK);
+    @PutMapping("/keywords")
+    @ApiOperation(value = "회원 관심사 등록/삭제 요청", notes = "전송받은 키워드 목록으로 회원 관심사 키워드를 변경합니다.")
+    public ResponseEntity<Response<KeywordRes>> addKeywords(@ApiIgnore @CurrentMember Member member, @Validated @RequestBody KeywordReq keywordReq) {
+        Set<Keyword> keywords = keywordService.saveKeywords(keywordReq.getKeywordSet());
+        return new ResponseEntity<>(Response.OK(memberService.addKeywords(member, keywords)), HttpStatus.OK);
     }
 
 }
