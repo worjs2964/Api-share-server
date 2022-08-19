@@ -31,10 +31,11 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo())
                 .tags(
-                        new Tag("member", "회원 관련 api"),
-                        new Tag("mail", "메일 관련 api"),
+                        new Tag("member", "회원 가입 및 인증 관련 api"),
                         new Tag("authentication", "로그인 관련 api"),
-                        new Tag("profile", "프로팔일 관련 api")
+                        new Tag("profile", "프로파일 관련 api"),
+                        new Tag("payment", "결제 관련 api"),
+                        new Tag("share", "공유 관련 api")
                 )
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("link.projectjg.apiserver"))
