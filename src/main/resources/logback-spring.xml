@@ -1,0 +1,50 @@
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level)--- [%X{traceId}] [%18thread] %green(%-50logger{15}) : %msg %n</pattern>
+        </layout>
+    </appender>
+
+    <appender name="ERROR_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./application_log/error/errorLog.log</file>
+        <encoder>
+            <pattern>%d{yyyyMMdd HH:mm:ss.SSS} [%X{traceId}] [%thread] %-5level [%logger{0}:%line] - %msg %n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./application_log/error/errorLog.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="API_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./application_log/api/apiLog.log</file>
+        <encoder>
+            <pattern>%d{yyyyMMdd HH:mm:ss.SSS} [%X{traceId}] [%thread] %-5level [%logger{0}:%line] - %msg %n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./application_log/api/apiLog.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+<!--    로컬은 console 출력-->
+    <springProfile name="local">
+        <root level="info">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+<!--    운영은 파일 출력-->
+    <springProfile name="prod">
+<!--        에러 로그-->
+        <logger name="link.projectjg.apiserver.exception.advice.RestApiAdvice" level="Error">
+            <appender-ref ref="ERROR_LOG_FILE" />
+        </logger>
+<!--api 로그-->
+        <logger name="link.projectjg.apiserver.aop.LogApiAop" level="Info">
+            <appender-ref ref="API_LOG_FILE" />
+        </logger>
+    </springProfile>
+</configuration>

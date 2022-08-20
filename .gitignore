@@ -39,3 +39,6 @@ out/
 ### 설정 파일 ###
 application-local.yml
 application-prod.yml
+
+### 로그 파일 ###
+application_log/
