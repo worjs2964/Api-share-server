@@ -86,7 +86,8 @@ public class MemberController {
     }
 
     @PatchMapping
-    @ApiOperation(value = "회원 정보 수정", notes = "회원 정보를 수정합니다. 수정할 내용만 요청으로 넘겨주면 해당 내용이 수정됩니다.")
+    @ApiOperation(value = "회원 정보 수정", notes = "회원 정보를 수정합니다. 수정할 내용만 요청으로 넘겨주면 해당 내용이 수정됩니다. \n" +
+            "메일 알림의 경우 인증 받은 회원만 사용할 수 있습니다.")
     public ResponseEntity<Response<MemberEditRes>> editMember(@ApiIgnore @CurrentMember Member member, @Validated @RequestBody MemberEditReq memberEditReq) {
         return new ResponseEntity<>(Response.OK(memberService.editMember(member, memberEditReq)), HttpStatus.OK);
     }

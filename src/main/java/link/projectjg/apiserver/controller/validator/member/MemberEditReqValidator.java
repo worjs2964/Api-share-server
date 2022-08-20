@@ -29,14 +29,21 @@ public class MemberEditReqValidator implements Validator {
     public void validate(Object object, Errors errors) {
         MemberEditReq memberEditReq = (MemberEditReq)object;
 
+        Member member = ((MemberAccount) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getMember();
+
         if (memberRepository.existsByNickname(memberEditReq.getNickname())) {
-            errors.rejectValue("nickname", "duplicate");
+            errors.rejectValue("nickname", "Duplicate");
+        }
+
+        if (!member.isAuthentication()) {
+            if (memberEditReq.getIsNotificationByEmail()) errors.rejectValue("isNotificationByEmail", "Authentication");
+            if (memberEditReq.getIsKeywordByEmail()) errors.rejectValue("isKeywordByEmail", "Authentication");
         }
 
         if (memberEditReq.getPasswordDto() != null) {
-            String password = ((MemberAccount) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getPassword();
+            String password = member.getPassword();
             if (!passwordEncoder.matches(memberEditReq.getPasswordDto().getPassword(), password)) {
-                throw new CustomException(ErrorCode.INVALID_PASSWORD);
+                errors.rejectValue("passwordDto.password", "Invalid");
             }
         }
 
