@@ -34,7 +34,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
                         new Tag("member", "회원 관련 api"),
                         new Tag("authentication", "로그인 관련 api"),
                         new Tag("payment", "결제 관련 api"),
-                        new Tag("share", "공유 관련 api")
+                        new Tag("share", "공유 관련 api"),
+                        new Tag("notification", "알림 관련 api")
                 )
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("link.projectjg.apiserver"))
