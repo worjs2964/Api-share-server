@@ -23,11 +23,11 @@ public class MemberJoinReqValidator implements Validator {
         MemberJoinReq memberJoinReq = (MemberJoinReq)object;
 
         if (memberRepository.existsByEmail(memberJoinReq.getEmail())) {
-            errors.rejectValue("email", "duplicate");
+            errors.rejectValue("email", "Duplicate");
         }
 
         if (memberRepository.existsByNickname(memberJoinReq.getNickname())) {
-            errors.rejectValue("nickname", "duplicate");
+            errors.rejectValue("nickname", "Duplicate");
         }
     }
 }
