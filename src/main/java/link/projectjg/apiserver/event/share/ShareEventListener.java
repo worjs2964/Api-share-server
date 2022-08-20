@@ -46,11 +46,11 @@ public class ShareEventListener {
         Share share = shareRepository.findWithKeywordById(shareCreateEvent.getShare().getId());
         Set<Keyword> keywordSet = share.getKeywordSet();
 
-        memberRepository.findDistinctMemberByKeywordSetIn(keywordSet).stream().forEach(member -> {
+        memberRepository.findDistinctMemberByKeywordSetIn(keywordSet).forEach(member -> {
             NotificationDto info = NotificationDto.builder()
                     .title("관심 키워드로 등록한 공유가 생성되었습니다.")
                     .message("제목 : '" + share.getTitle() + "' 이 생성되었습니다. 지금 바로 확인해보세요.")
-                    .link(url + "/share/" + share.getId())
+                    .link(url + "/v1/shares/" + share.getId())
                     .notificationType(NotificationType.CREATE).build();
 
             if (member.isKeywordByEmail()) sendByMail(member, info);
@@ -91,7 +91,7 @@ public class ShareEventListener {
         NotificationDto info = NotificationDto.builder()
                 .title(title)
                 .message(message)
-                .link(url + "/share/" + share.getId())
+                .link(url + "/v1/shares/" + share.getId())
                 .notificationType(type).build();
 
         if (member.isNotificationByEmail()) sendByMail(member, info);
