@@ -37,4 +37,8 @@ public class Notification {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
+
+    public void check() {
+        this.checked = true;
+    }
 }
