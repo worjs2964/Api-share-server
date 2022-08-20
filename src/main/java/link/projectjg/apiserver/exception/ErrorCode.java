@@ -14,6 +14,7 @@ public enum ErrorCode {
     MISMATCH_MEMBER_INFO(BAD_REQUEST, "아이디 또는 비밀번호가 일치하지 않습니다."),
     INVALID_VALUE(BAD_REQUEST, "유효하지 않은 값을 입력하였습니다."),
     INVALID_URL(BAD_REQUEST, "유효하지 주소입니다."),
+    INVALID_PASSWORD(BAD_REQUEST, "기존 비밀번호가 일치하지 않습니다."),
     INVALID_AUTHENTICATION_RESEND_EMAIL(BAD_REQUEST, "인증 메일을 보낼 수 없습니다."),
     INVALID_REFRESH_TOKEN(BAD_REQUEST, "리프레시 토큰이 유효하지 않습니다"),
     INVALID_JOIN_SHARE(BAD_REQUEST, "참여할 수 없는 공유입니다. 공유가 비공개, 모집 종료 또는 완료 상태입니다."),

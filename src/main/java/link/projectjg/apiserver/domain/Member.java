@@ -108,4 +108,47 @@ public class Member {
     public void plusPoint(long totalCost) {
         this.point += totalCost;
     }
+
+    // update용 메소드
+    public void updateNickname(String nickname) {
+        if (nickname != null) {
+            this.nickname = nickname;
+        }
+    }
+
+    public void updatePassword(String password) {
+        if (password != null) {
+            this.password = password;
+        }
+    }
+
+    public void updateDescription(String description) {
+        if (description != null) {
+            this.description = description;
+        }
+    }
+
+    public void updateNotificationByWeb(Boolean isNotificationByWeb) {
+        if (isNotificationByWeb != null) {
+            this.isNotificationByWeb = isNotificationByWeb;
+        }
+    }
+
+    public void updateKeywordByWeb(Boolean isKeywordByWeb) {
+        if (isKeywordByWeb != null) {
+            this.isKeywordByWeb = isKeywordByWeb;
+        }
+    }
+
+    public void updateNotificationByEmail(Boolean isNotificationByEmail) {
+        if (isNotificationByEmail != null) {
+            this.isNotificationByEmail = isNotificationByEmail;
+        }
+    }
+
+    public void updateKeywordByEmail(Boolean isKeywordByEmail) {
+        if (isKeywordByEmail != null) {
+            this.isKeywordByEmail = isKeywordByEmail;
+        }
+    }
 }

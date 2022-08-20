@@ -2,23 +2,20 @@ package link.projectjg.apiserver.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
 import link.projectjg.apiserver.annotation.CurrentMember;
+import link.projectjg.apiserver.controller.validator.member.MemberEditReqValidator;
 import link.projectjg.apiserver.controller.validator.member.MemberJoinReqValidator;
 import link.projectjg.apiserver.domain.Keyword;
 import link.projectjg.apiserver.domain.Member;
 import link.projectjg.apiserver.dto.Response;
 import link.projectjg.apiserver.dto.keyword.KeywordReq;
 import link.projectjg.apiserver.dto.keyword.KeywordRes;
-import link.projectjg.apiserver.dto.member.MemberJoinReq;
-import link.projectjg.apiserver.dto.member.MemberJoinRes;
-import link.projectjg.apiserver.dto.member.MemberProfileRes;
+import link.projectjg.apiserver.dto.member.*;
 import link.projectjg.apiserver.service.KeywordService;
 import link.projectjg.apiserver.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -36,10 +33,16 @@ public class MemberController {
     private final MemberService memberService;
     private final KeywordService keywordService;
     private final MemberJoinReqValidator memberJoinReqValidator;
+    private final MemberEditReqValidator memberEditReqValidator;
 
     @InitBinder("memberJoinReq")
-    public void init(WebDataBinder dataBinder) {
+    public void initJoinValidator(WebDataBinder dataBinder) {
         dataBinder.addValidators(memberJoinReqValidator);
+    }
+
+    @InitBinder("memberEditReq")
+    public void initEditValidator(WebDataBinder dataBinder) {
+        dataBinder.addValidators(memberEditReqValidator);
     }
 
     @PostMapping
@@ -72,6 +75,12 @@ public class MemberController {
     public ResponseEntity<Response<KeywordRes>> addKeywords(@ApiIgnore @CurrentMember Member member, @Validated @RequestBody KeywordReq keywordReq) {
         Set<Keyword> keywords = keywordService.saveKeywords(keywordReq.getKeywordSet());
         return new ResponseEntity<>(Response.OK(memberService.addKeywords(member, keywords)), HttpStatus.OK);
+    }
+
+    @PatchMapping
+    @ApiOperation(value = "회원 정보 수정", notes = "회원 정보를 수정합니다. 수정할 내용만 요청으로 넘겨주면 해당 내용이 수정됩니다.")
+    public ResponseEntity<Response<MemberEditRes>> editMember(@ApiIgnore @CurrentMember Member member, @Validated @RequestBody MemberEditReq memberEditReq) {
+        return new ResponseEntity<>(Response.OK(memberService.editMember(member, memberEditReq)), HttpStatus.OK);
     }
 
 }

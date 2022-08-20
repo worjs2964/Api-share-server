@@ -6,9 +6,7 @@ import link.projectjg.apiserver.domain.MemberShare;
 import link.projectjg.apiserver.domain.share.Share;
 import link.projectjg.apiserver.domain.share.ShareState;
 import link.projectjg.apiserver.dto.keyword.KeywordRes;
-import link.projectjg.apiserver.dto.member.MemberJoinReq;
-import link.projectjg.apiserver.dto.member.MemberJoinRes;
-import link.projectjg.apiserver.dto.member.MemberProfileRes;
+import link.projectjg.apiserver.dto.member.*;
 import link.projectjg.apiserver.exception.CustomException;
 import link.projectjg.apiserver.exception.ErrorCode;
 import link.projectjg.apiserver.mail.EmailMessage;
@@ -98,5 +96,24 @@ public class MemberService {
     public KeywordRes addKeywords(Member member, Set<Keyword> keywords) {
         member.setKeywordSet(keywords);
         return modelMapper.map(memberRepository.save(member), KeywordRes.class);
+    }
+
+    public MemberEditRes editMember(Member member, MemberEditReq memberEditReq) {
+        memberRepository.save(update(member, memberEditReq));
+        return modelMapper.map(member, MemberEditRes.class);
+    }
+
+    private Member update(Member member, MemberEditReq memberEditReq) {
+        member.updateNickname(memberEditReq.getNickname());
+        member.updateDescription(memberEditReq.getDescription());
+        member.updateKeywordByEmail(memberEditReq.getIsKeywordByEmail());
+        member.updateNotificationByEmail(memberEditReq.getIsNotificationByEmail());
+        member.updateKeywordByWeb(memberEditReq.getIsKeywordByWeb());
+        member.updateNotificationByWeb(memberEditReq.getIsNotificationByWeb());
+        if (memberEditReq.getPasswordDto() != null) {
+            member.updatePassword(memberEditReq.getPasswordDto().getNewPassword());
+            member.encodePassword(passwordEncoder);
+        }
+        return member;
     }
 }
