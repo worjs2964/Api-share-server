@@ -16,6 +16,7 @@ import link.projectjg.apiserver.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +57,13 @@ public class MemberController {
             notes = "회원의 프로필을 확인합니다. 타인의 프로필인 경우 id, nickname, description, shareList(VISIBLE인 공유)에 대한 정보만 확인할 수 있습니다.")
     public ResponseEntity<Response<MemberProfileRes>> showProfile(@ApiIgnore @CurrentMember Member member, @PathVariable Long id) {
         return new ResponseEntity<>(Response.OK(memberService.showProfile(member, id)), HttpStatus.OK);
+    }
+
+    @GetMapping("/my-profile")
+    @ApiOperation(value = "나의 프로필 확인", notes = "자신의 프로필을 확인합니다.")
+    @PreAuthorize("hasRole('ROLE_MEMBER')")
+    public ResponseEntity<Response<MemberProfileRes>> showMyProfile(@ApiIgnore @CurrentMember Member member) {
+        return new ResponseEntity<>(Response.OK(memberService.showMyProfile(member)), HttpStatus.OK);
     }
 
     @PostMapping("/authentication")

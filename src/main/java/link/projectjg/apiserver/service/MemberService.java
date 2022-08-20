@@ -63,6 +63,15 @@ public class MemberService {
         }
     }
 
+    public MemberProfileRes showMyProfile(Member member) {
+        Member me = memberRepository.findWithShareListById(member.getId())
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        List<Share> participatedShareList = me.getMemberShares().stream()
+                .map(MemberShare::getShare).collect(Collectors.toList());
+        return MemberProfileRes.of(me, me.getMyShareList(), participatedShareList);
+    }
+
     // 인증 메일 재전송
     public String resendAuthenticationEmail(String email) {
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new CustomException(ErrorCode.INVALID_VALUE));
