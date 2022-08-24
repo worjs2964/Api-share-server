@@ -14,6 +14,7 @@ import link.projectjg.apiserver.mail.MailSender;
 import link.projectjg.apiserver.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,9 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final MailSender mailSender;
     private final TemplateEngine templateEngine;
+
+    @Value("${share-service.url}")
+    private String url;
 
     // 회원가입
     public MemberJoinRes joinMember(MemberJoinReq memberJoinReq) {
@@ -84,7 +88,7 @@ public class MemberService {
     private void sendEmailCheckToken(Member member) {
         Context context = new Context();
         context.setVariable("nickname", member.getNickname());
-        context.setVariable("link", "v1/members/authentication?token=" + member.getAuthenticationToken() + "&email=" + member.getEmail());
+        context.setVariable("link", url + "v1/members/authentication?token=" + member.getAuthenticationToken() + "&email=" + member.getEmail());
         String message = templateEngine.process("authentication-email", context);
 
         EmailMessage emailMessage = EmailMessage.builder()
