@@ -36,12 +36,15 @@ public class LogApiAop {
         Object[] args = joinPoint.getArgs();
         if (args.length <= 0) log.info("no parameter");
         for (Object arg : args) {
-            log.info("parameter type = {}", arg.getClass().getSimpleName());
-            log.info("parameter value = {}", arg);
+            if (arg != null) {
+                log.info("parameter type = {}", arg.getClass().getSimpleName());
+                log.info("parameter value = {}", arg);
+            }
         }
-
-        log.info("return type = {}", returnObj.getClass().getSimpleName());
-        log.info("return value = {}", returnObj);
+        if (returnObj != null) {
+            log.info("return type = {}", returnObj.getClass());
+            log.info("return value = {}", returnObj);
+        }
 
         MDC.clear();
     }
