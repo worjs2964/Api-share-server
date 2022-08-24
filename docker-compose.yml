@@ -1,0 +1,18 @@
+version: '3.3' # 버전을 지정
+services: # 서비스 정의
+  api-server:
+    build: .
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./application_log/:/application_log
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+    depends_on: # redis 컨테이너의 의존
+      - redis
+
+  # Redis 설정
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
