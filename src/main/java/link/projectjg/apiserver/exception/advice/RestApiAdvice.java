@@ -10,6 +10,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -88,6 +89,12 @@ public class RestApiAdvice {
     public ResponseEntity<ErrorResponse> MissingPathVariableException(MissingPathVariableException e, HttpServletRequest request) {
         log.error("URI: ({}){}",request.getMethod(), request.getRequestURI(), e);
         return ErrorResponse.toResponseEntity(ErrorCode.ARGUMENT_NOT_FOUND);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> HttpMessageNotReadableException(HttpMessageNotReadableException e, HttpServletRequest request) {
+        log.error("URI: ({}){}",request.getMethod(), request.getRequestURI(), e);
+        return ErrorResponse.toResponseEntity(ErrorCode.INVALID_JSON);
     }
 
     @ExceptionHandler(Exception.class)
