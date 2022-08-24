@@ -1,8 +1,9 @@
 package link.projectjg.apiserver.config;
 
+import com.google.common.collect.Sets;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -25,9 +26,16 @@ public class SwaggerConfig implements WebMvcConfigurer {
     private static final String API_VERSION = "1.0.0";
     private static final String API_DESCRIPTION = "Share Service Api 사용 설명서";
 
+    @Value("${share-service.protocol}")
+    private String protocol;
+    @Value("${share-service.host}")
+    private String host;
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .protocols(Sets.newHashSet(protocol))
+                .host(host)
                 .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo())
                 .tags(
