@@ -88,7 +88,7 @@ public class MemberService {
     private void sendEmailCheckToken(Member member) {
         Context context = new Context();
         context.setVariable("nickname", member.getNickname());
-        context.setVariable("link", url + "v1/members/authentication?token=" + member.getAuthenticationToken() + "&email=" + member.getEmail());
+        context.setVariable("link", url + "/v1/members/authentication?token=" + member.getAuthenticationToken() + "&email=" + member.getEmail());
         String message = templateEngine.process("authentication-email", context);
 
         EmailMessage emailMessage = EmailMessage.builder()
