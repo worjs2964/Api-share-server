@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 public class MemberEditReq {
 
     @Pattern(regexp = "^[A-Za-z0-9가-힣]{2,20}$")
-    @ApiModelProperty(value = "닉네임", example = "shareService")
+    @ApiModelProperty(value = "닉네임", example = "인증된사용자")
     private String nickname;
 
     @ApiModelProperty(value = "자기소개", example = "안녕하세요.")

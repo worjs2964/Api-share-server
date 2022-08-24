@@ -12,10 +12,10 @@ import javax.validation.constraints.Pattern;
 @ApiModel(value = "회원가입 응답 DTO", description = "회원 가입 성공 시 이메일, 닉네임을 응답합니다.")
 public class MemberJoinRes {
 
-    @ApiModelProperty(value = "이메일", example = "rebuild96@naver.com")
+    @ApiModelProperty(value = "이메일", example = "checked@share-service.com")
     private String email;
 
-    @ApiModelProperty(value = "닉네임", example = "쉐어서비스")
+    @ApiModelProperty(value = "닉네임", example = "인증된사용자")
     private String nickname;
 
 }

@@ -28,10 +28,10 @@ public class MemberProfileRes {
     @ApiModelProperty(value = "회원 id 번호", example = "1")
     private Long id;
 
-    @ApiModelProperty(value = "회원 이메일", example = "rebuild96@naver.com")
+    @ApiModelProperty(value = "회원 이메일", example = "checked@share-service.com")
     private String email;
 
-    @ApiModelProperty(value = "회원 닉네임", example = "쉐어서비스")
+    @ApiModelProperty(value = "회원 닉네임", example = "인증된사용자")
     private String nickname;
 
     @ApiModelProperty(value = "회원 인증 여부", example = "true")
@@ -40,7 +40,7 @@ public class MemberProfileRes {
     @ApiModelProperty(value = "포인트", example = "10000")
     private Integer point;
 
-    @ApiModelProperty(value = "자기소개", example = "안녕하세요. 쉐어서비스입니다.")
+    @ApiModelProperty(value = "자기소개", example = "안녕하세요.")
     private String description;
 
     @ApiModelProperty(value = "웹 일반 알림 여부", example = "true")

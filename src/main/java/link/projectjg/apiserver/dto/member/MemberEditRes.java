@@ -11,7 +11,7 @@ import javax.validation.constraints.Pattern;
 @ApiModel(value = "회원 정보 수정 응답 DTO")
 public class MemberEditRes {
 
-    @ApiModelProperty(value = "닉네임", example = "shareService")
+    @ApiModelProperty(value = "닉네임", example = "인증된사용자")
     private String nickname;
 
     @ApiModelProperty(value = "자기소개", example = "안녕하세요.")

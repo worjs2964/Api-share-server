@@ -15,12 +15,12 @@ public class MemberJoinReq {
 
     @NotBlank
     @Email(regexp = "^[a-z0-9]+@[a-z0-9]+\\.[a-z0-9]+$")
-    @ApiModelProperty(value = "이메일", example = "rebuild96@naver.com", required = true)
+    @ApiModelProperty(value = "이메일", example = "checked@share-service.com", required = true)
     private String email;
 
     @NotBlank
     @Pattern(regexp = "^[A-Za-z0-9가-힣]{2,20}$")
-    @ApiModelProperty(value = "닉네임", example = "쉐어서비스", required = true)
+    @ApiModelProperty(value = "닉네임", example = "인증된사용자", required = true)
     private String nickname;
 
     @NotBlank

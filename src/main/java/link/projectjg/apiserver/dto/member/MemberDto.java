@@ -9,7 +9,7 @@ import lombok.Data;
 @ApiModel(value  = "회원 DTO")
 public class MemberDto {
 
-    @ApiModelProperty(value = "닉네임", example = "쉐어서비스")
+    @ApiModelProperty(value = "닉네임", example = "인증된사용자")
     private String nickname;
 
     @ApiModelProperty(value = "회원 번호", example = "13")
