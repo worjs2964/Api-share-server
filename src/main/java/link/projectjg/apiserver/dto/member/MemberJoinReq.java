@@ -14,7 +14,7 @@ import javax.validation.constraints.Pattern;
 public class MemberJoinReq {
 
     @NotBlank
-    @Email(regexp = "^[a-z0-9]+@[a-z0-9]+\\.[a-z0-9]+$")
+    @Email(regexp = "^[a-z0-9]+@[a-z0-9-]+\\.[a-z0-9]+$")
     @ApiModelProperty(value = "이메일", example = "checked@share-service.com", required = true)
     private String email;
 

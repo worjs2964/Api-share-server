@@ -14,7 +14,7 @@ public class SignInReq {
 
     @ApiModelProperty(value = "이메일", example = "checked@share-service.com", required = true)
     @NotBlank
-    @Email(regexp = "^[a-z0-9]+@[a-z0-9]+\\.[a-z0-9]+$")
+    @Email(regexp = "^[a-z0-9]+@[a-z0-9-]+\\.[a-z0-9]+$")
     private String email;
 
     @ApiModelProperty(value = "패스워드", example = "Password96!", required = true)
