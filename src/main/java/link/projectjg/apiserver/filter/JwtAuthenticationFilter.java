@@ -68,15 +68,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
     }
-
-//    // 필터를 타면 안되는 요청 제외.
-//    @Override
-//    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-//        Collection<String> excludeUrlPatterns = new LinkedHashSet<>();
-//        excludeUrlPatterns.add("/v1/authentication/sign-in");
-//        excludeUrlPatterns.add("/v1/authentication/reissue");
-//        excludeUrlPatterns.add("/v1/authentication/logout");
-//
-//        return excludeUrlPatterns.stream().anyMatch(pattern -> new AntPathMatcher().match(pattern, request.getServletPath()));
-//    }
 }
