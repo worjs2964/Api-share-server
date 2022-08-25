@@ -11,7 +11,7 @@ import static org.springframework.http.HttpStatus.*;
 public enum ErrorCode {
 
     /* 400 BAD_REQUEST : 잘못된 요청 */
-    INVALID_JSON(BAD_REQUEST, "JSON형식이 잘못되었습니다."),
+    INVALID_JSON(BAD_REQUEST, "JSON 형식또는 범위에 맞지 않는 값을 입력하셨습니다. 요청 DTO의 내용을 확인해주세요."),
     MISMATCH_MEMBER_INFO(BAD_REQUEST, "아이디 또는 비밀번호가 일치하지 않습니다."),
     INVALID_VALUE(BAD_REQUEST, "유효하지 않은 값을 입력하였습니다."),
     INVALID_URL(BAD_REQUEST, "유효하지 주소입니다."),

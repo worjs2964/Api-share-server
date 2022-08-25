@@ -49,7 +49,8 @@ public class ShareController {
 
     @PostMapping
     @ApiOperation(value = "공유 생성 요청",
-            notes = "공유를 생성합니다. 공유는 인증된 회원(이메일 인증)만 생성할 수 있고 키워드는 최대 3개 까지 등록이 가능하며 비공개 상태(INVISIBLE)로 생성됩니다.")
+            notes = "공유를 생성합니다. 공유는 인증된 회원(이메일 인증)만 생성할 수 있고 키워드는 최대 3개 까지 등록이 가능하며 비공개 상태(INVISIBLE)로 생성됩니다. \n" +
+                    "공유의 타입으로는 VIDEO, MUSIC, GAME, ETC 중 하나를 사용해야 합니다.")
     public ResponseEntity<Response<ShareRes>> createShare(@ApiIgnore @CurrentMember Member member,
                                                           @Validated @RequestBody CreateShareReq createShareReq) {
         Set<Keyword> keywords = keywordService.saveKeywords(createShareReq.getKeywordSet());
